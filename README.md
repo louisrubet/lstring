@@ -36,7 +36,7 @@ Using these objects can lead to many short allocations, that can dramatically sh
 * `lstring` members
     * `str`: pointer on the string, always provided by the user at creation time, except in functions `allocateCopy` and `allocateEmpty`
     * `cap`: maximum size of the string, including final `\0`
-    * `len`: current size of the string excluding final `\0`, equivalent of safe `strnlen(str, capacity)`
+    * `len`: current size of the string excluding final `\0`, equivalent to safe `strnlen(str, capacity)`
 
 * Its methods needing a single string pointer for convenience always use array references, never raw pointers. These methods are declared as templates.
 * `lstring` code is in a header file, in order to help with templates compilation.
