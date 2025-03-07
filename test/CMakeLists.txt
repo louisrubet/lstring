@@ -3,6 +3,6 @@ project(test)
 
 set(LIBS ../..)
 
-add_executable(test test.cpp)
+add_executable(test test.cpp ../lstring.cpp)
 target_include_directories(test PRIVATE ..)
 target_compile_options(test PRIVATE -std=c++17 -ggdb)

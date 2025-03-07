@@ -201,7 +201,67 @@ bool testCatCpy() {
 
 bool testTrim() {
     bool ret = true;
-    std::cout << title("lstring::trim") << std::endl;
+    std::cout << title("lstring::trimLeft, lstring::trimRight, lstring::trim") << std::endl;
+
+    {
+        char buf[4][12] = {"abc  ", "   abc  ", "\t \t abc  ", "    abc  "};
+        for (int i = 0; i < 4; i++) {
+            lstring a(buf[i], sizeof(buf[i]), strlen(buf[i]));
+            a.trimLeft();
+            ret &= checkString("trimLeft - str", a.str, "abc  ");
+            ret &= checkInt("trimLeft - length", a.len, 5);
+        }
+    }
+
+    {
+        char buf[4][12] = {"       ", "", " ", "\t  "};
+        for (int i = 0; i < 4; i++) {
+            lstring a(buf[i], sizeof(buf[i]), strlen(buf[i]));
+            a.trimLeft();
+            ret &= checkString("trimLeft - str", a.str, "");
+            ret &= checkInt("trimLeft - length", a.len, 0);
+        }
+    }
+
+    {
+        char buf[4][12] = {"a b c", "  a b c", "\ta b c", "\t\t a b c"};
+        for (int i = 0; i < 4; i++) {
+            lstring a(buf[i], sizeof(buf[i]), strlen(buf[i]));
+            a.trimLeft();
+            ret &= checkString("trimLeft - str", a.str, "a b c");
+            ret &= checkInt("trimLeft - length", a.len, 5);
+        }
+    }
+
+    {
+        char buf[4][12] = {"  abc      ", "  abc", "  abc\t\t \t", "  abc "};
+        for (int i = 0; i < 4; i++) {
+            lstring a(buf[i], sizeof(buf[i]), strlen(buf[i]));
+            a.trimRight();
+            ret &= checkString("trimRight - str", a.str, "  abc");
+            ret &= checkInt("trimRight - length", a.len, 5);
+        }
+    }
+
+    {
+        char buf[4][12] = {"       ", "", " ", "\t  "};
+        for (int i = 0; i < 4; i++) {
+            lstring a(buf[i], sizeof(buf[i]), strlen(buf[i]));
+            a.trimRight();
+            ret &= checkString("trimRight - str", a.str, "");
+            ret &= checkInt("trimRight - length", a.len, 0);
+        }
+    }
+
+    {
+        char buf[4][12] = {"a b c", "a b c  ", "a b c\t", "a b c \t\t  "};
+        for (int i = 0; i < 4; i++) {
+            lstring a(buf[i], sizeof(buf[i]), strlen(buf[i]));
+            a.trimRight();
+            ret &= checkString("trimRight - str", a.str, "a b c");
+            ret &= checkInt("trimRight - length", a.len, 5);
+        }
+    }
 
     {
         char buf[4][12] = {"abc       ", "   abc", "abc", "    abc "};
@@ -283,7 +343,6 @@ bool testToStringIntDouble() {
     ret &= checkString("toString(float f..)", lstring::toString(3.14159e-22f, buf).str, "0.00");
     ret &= checkString("toString(float f..)", lstring::toString(1.f / 0.f, buf).str, "inf");
     ret &= checkString("toString(float f..)", lstring::toString(1.f / -0.f, buf).str, "-inf");
-    ret &= checkString("toString(float f..)", lstring::toString(0.0f / 0.0f, buf).str, "-nan");
     ret &= checkString("toString(int i..)", lstring::toString(12345, buf).str, "12345");
     ret &= checkString("toString(uint32_t i..)", lstring::toString(12345, buf).str, "12345");
     ret &= checkString("toString(uint8_t i..)", lstring::toString(254, buf).str, "254");

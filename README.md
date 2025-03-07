@@ -42,7 +42,3 @@ Using these objects can lead to many short allocations, that can dramatically sh
 * `lstring` code is in a header file, in order to help with templates compilation.
 * `lstring` methods return object reference, allowing to chain operations.
 * `lstring` methods check the size of strings to avoid buffer overruns.
-
-## Examples
-
-Please refer to `lstring.h` for examples.
